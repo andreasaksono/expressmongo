@@ -5,7 +5,7 @@ var bodyParser = require("body-parser");
 var index = require("./routes/index");
 var countries = require("./routes/countries");
 
-var config = require('./config');
+var config = require('./config/index');
 
 var app = express();
 
@@ -21,9 +21,17 @@ app.use(express.static(path.join(__dirname, "client")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use("/", index);
+// enable CORS
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+ app.use("/", index);
 app.use("/api", countries);
 
 app.listen(config.port, function() {
     console.log("Server started on port " + config.port)
 });
+
