@@ -1,7 +1,7 @@
 var express = require("express");
 var mongojs = require('mongojs'); 
 var config = require('../config');
-var db = mongojs(config.database_local, ['countries']); 
+var db = mongojs(config.database_mlab, ['countries']); 
 
 var router = express.Router();
 
